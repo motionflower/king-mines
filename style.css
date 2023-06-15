@@ -1,0 +1,47 @@
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+ }
+
+ body {
+    color: white;
+    margin: 0;
+    height: 100vh;
+    background-color: rgb(32, 52, 72);
+} 
+
+.game {
+    border: solid rgb(255, 255, 255) 1px;
+    display: flex;
+    gap: 10px 7px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 270px;
+}
+
+.box {
+    background-color: rgb(8, 38, 66);
+    height: 40px;
+    width: 40px;
+    /* border: solid rgb(255, 255, 255) 1px; */
+    box-shadow: 0px 3px rgb(67, 90, 112);
+    border-radius: 10%;
+    object-fit: cover;
+    transition: 0.2s;
+}
+
+.box:hover {
+    background-color: rgb(186, 195, 209);
+}
+
+footer {
+    position: fixed;
+    height: 50px;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(186, 195, 209);
+    color: white;
+    text-align: center;
+  }
