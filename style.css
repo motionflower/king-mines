@@ -21,18 +21,24 @@
 }
 
 .box {
-    background-color: rgb(8, 38, 66);
+    background-color: rgb(58, 133, 204);
     height: 40px;
     width: 40px;
     /* border: solid rgb(255, 255, 255) 1px; */
-    box-shadow: 0px 3px rgb(67, 90, 112);
+    box-shadow: 0px 4px rgb(35, 92, 145);
     border-radius: 10%;
     object-fit: cover;
     transition: 0.2s;
+    top: 0;
+    transition: top 0.1s;
+    position: relative;
+    text-align: center;
+    line-height: 40px;
 }
 
 .box:hover {
-    background-color: rgb(186, 195, 209);
+    background-color: rgb(90, 162, 230);
+    top: 2px;
 }
 
 footer {
@@ -45,3 +51,14 @@ footer {
     color: white;
     text-align: center;
   }
+
+.divider, .vertical {
+    border-right: 10px solid #888989;
+    margin: 20px 20px;
+}
+
+  input[type="submit"]:disabled {
+    opacity: 0.5; /* Adjust the opacity to achieve the desired level of gray-out effect */
+    cursor: not-allowed;
+  }
+  

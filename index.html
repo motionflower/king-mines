@@ -8,65 +8,68 @@
     <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Explosion-155624_icon.svg/2048px-Explosion-155624_icon.svg.png" type="image/x-icon">
 </head>
 <body>
-
-    <div class="left-side">
-        Bet amount: <span class="money">$0.00</span>
-        <form id="betamount"> 
-            <input type="number" />
+<header>
+    Total: $<span class="totalamount">100</span>
+    Profile
+</header>
+    <div class="leftpanel">
+        
+        Bet amount: $<span class="betamount">0.00</span>
+        <form id="betsettings"> 
+            <input id="betamount" type="number" required>
+            <select name="mines" id="mines">
+                <option value="5">Low (5)</option>
+                <option value="10">Medium (10)</option>
+                <option value="15">Hard (15)</option>
+                <option value="20">Very Hard (20)</option>
+                <option value="24">Test your luck (24)</option>
+            </select>
+            <input type="submit" value="BET" id="startgame">
         </form>
-        Mines
-        <select name="mines" id="mines">
-            <option value="3"></option>
-            <option value="4"></option>
-            <option value="5"></option>
-            <option value="6"></option>
-            <option value="7"></option>
-            <option value="8"></option>
-            <option value="9"></option>
-            <option value="10"></option>
-            <option value="11"></option>
-            <option value="12"></option>
-            <option value="13"></option>
-            <option value="14"></option>
-            <option value="15"></option>
-            <option value="16"></option>
-            <option value="17"></option>
-            <option value="18"></option>
-            <option value="19"></option>
-            <option value="20"></option>
-            <option value="21"></option>
-            <option value="22"></option>
-            <option value="23"></option>
-            <option value="24"></option>
-        </select>
+        Number of mines
+
+<div class="divider vertical"></div>
     </div>
-    <div class="game">
-        <div class="box 1"></div>
-        <div class="box 2"></div>
-        <div class="box 3"></div>
-        <div class="box 4"></div>
-        <div class="box 5"></div>
-        <div class="box 6"></div>
-        <div class="box 7"></div>
-        <div class="box 8"></div>
-        <div class="box 9"></div>
-        <div class="box 10"></div>
-        <div class="box 11"></div>
-        <div class="box 12"></div>
-        <div class="box 13"></div>
-        <div class="box 14"></div>
-        <div class="box 15"></div>
-        <div class="box 16"></div>
-        <div class="box 17"></div>
-        <div class="box 18"></div>
-        <div class="box 19"></div>
-        <div class="box 20"></div>
-        <div class="box 21"></div>
-        <div class="box 22"></div>
-        <div class="box 23"></div>
-        <div class="box 24"></div>
-        <div class="box 25"></div>
+    <div class="rightpanel">
+        <div class="game">
+            <div class="box 1"></div>
+            <div class="box 2"></div>
+            <div class="box 3"></div>
+            <div class="box 4"></div>
+            <div class="box 5"></div>
+            <div class="box 6"></div>
+            <div class="box 7"></div>
+            <div class="box 8"></div>
+            <div class="box 9"></div>
+            <div class="box 10"></div>
+            <div class="box 11"></div>
+            <div class="box 12"></div>
+            <div class="box 13"></div>
+            <div class="box 14"></div>
+            <div class="box 15"></div>
+            <div class="box 16"></div>
+            <div class="box 17"></div>
+            <div class="box 18"></div>
+            <div class="box 19"></div>
+            <div class="box 20"></div>
+            <div class="box 21"></div>
+            <div class="box 22"></div>
+            <div class="box 23"></div>
+            <div class="box 24"></div>
+            <div class="box 25"></div>
+        </div>
+        <div class="numberofobjects">
+            Diamonds: <span class="ndiamonds">0</span>
+            Bombs: <span class="nbombs">0</span>
+            <div class="cashoutsection">
+                <p class="profit">Profit: <span class="nprofit">0</span></p>
+                <button type="button" id="cashout">CASH OUT!</button>
+            </div>
+            
+        </div>
     </div>
+
+    <div class="bets">My bets</div>
     
     <footer>
         <h2>reset account</h2>
