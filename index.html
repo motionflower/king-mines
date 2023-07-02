@@ -6,15 +6,18 @@
     <title>Stake-Mines</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Explosion-155624_icon.svg/2048px-Explosion-155624_icon.svg.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@100;200;300;400;500;600;700;800;900&family=Rokkitt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Urbanist:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
 <header>
     Total: $<span class="totalamount">100</span>
     Profile
 </header>
+<div class="container">
     <div class="leftpanel">
-        
-        Bet amount: $<span class="betamount">0.00</span>
+        Bet amount: $<span class="betamount">1</span>
         <form id="betsettings"> 
             <input id="betamount" type="number" required>
             <select name="mines" id="mines">
@@ -26,50 +29,46 @@
             </select>
             <input type="submit" value="BET" id="startgame">
         </form>
-        Number of mines
 
-<div class="divider vertical"></div>
-    </div>
-    <div class="rightpanel">
-        <div class="game">
-            <div class="box 1"></div>
-            <div class="box 2"></div>
-            <div class="box 3"></div>
-            <div class="box 4"></div>
-            <div class="box 5"></div>
-            <div class="box 6"></div>
-            <div class="box 7"></div>
-            <div class="box 8"></div>
-            <div class="box 9"></div>
-            <div class="box 10"></div>
-            <div class="box 11"></div>
-            <div class="box 12"></div>
-            <div class="box 13"></div>
-            <div class="box 14"></div>
-            <div class="box 15"></div>
-            <div class="box 16"></div>
-            <div class="box 17"></div>
-            <div class="box 18"></div>
-            <div class="box 19"></div>
-            <div class="box 20"></div>
-            <div class="box 21"></div>
-            <div class="box 22"></div>
-            <div class="box 23"></div>
-            <div class="box 24"></div>
-            <div class="box 25"></div>
-        </div>
-        <div class="numberofobjects">
-            Diamonds: <span class="ndiamonds">0</span>
-            Bombs: <span class="nbombs">0</span>
-            <div class="cashoutsection">
-                <p class="profit">Profit: <span class="nprofit">0</span></p>
-                <button type="button" id="cashout">CASH OUT!</button>
+        <div class="cashoutsection">
+        Diamonds: <span class="ndiamonds">0</span>
+        <br>
+        Bombs: <span class="nbombs">0</span>
+            <p class="profit">Profit: <span class="nprofit">0</span></p>
+            <button type="button" id="cashout">CASH OUT!</button>
+            <div class="divider vertical"></div>
             </div>
-            
         </div>
+    <div class="game">
+        <div class="box 1"></div>
+        <div class="box 2"></div>
+        <div class="box 3"></div>
+        <div class="box 4"></div>
+        <div class="box 5"></div>
+        <div class="box 6"></div>
+        <div class="box 7"></div>
+        <div class="box 8"></div>
+        <div class="box 9"></div>
+        <div class="box 10"></div>
+        <div class="box 11"></div>
+        <div class="box 12"></div>
+        <div class="box 13"></div>
+        <div class="box 14"></div>
+        <div class="box 15"></div>
+        <div class="box 16"></div>
+        <div class="box 17"></div>
+        <div class="box 18"></div>
+        <div class="box 19"></div>
+        <div class="box 20"></div>
+        <div class="box 21"></div>
+        <div class="box 22"></div>
+        <div class="box 23"></div>
+        <div class="box 24"></div>
+        <div class="box 25"></div>
     </div>
 
-    <div class="bets">My bets</div>
+</div>
+<div class="bets">My bets</div>
     
     <footer>
         <h2>reset account</h2>

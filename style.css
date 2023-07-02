@@ -2,30 +2,50 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box; 
+    font-family: 'Heebo', sans-serif;
  }
 
+
+
+:root {
+    --mainColor: rgb(32, 52, 72);
+    --darkerMainColor: rgb(29, 38, 47);
+    --secondColor: rgb(58, 133, 204);
+    --textColor: white;
+    --thirdColor: rgb(204, 133, 58);
+} 
+
+.container {
+    /* background-color: rgb(116, 80, 33); */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
  body {
-    color: white;
+    color: var(--textColor);
     margin: 0;
     height: 100vh;
-    background-color: rgb(32, 52, 72);
+    background-color: var(--mainColor);
 } 
 
 .game {
     border: solid rgb(255, 255, 255) 1px;
     display: flex;
-    gap: 10px 7px;
+    gap: 20px 18px;
     flex-direction: row;
     flex-wrap: wrap;
-    max-width: 270px;
+    max-width: 550px;
+    left: 10px;
 }
 
 .box {
-    background-color: rgb(58, 133, 204);
-    height: 40px;
-    width: 40px;
+    background-color: var(--secondColor);
+    height: 80px;
+    width: 80px;
     /* border: solid rgb(255, 255, 255) 1px; */
-    box-shadow: 0px 4px rgb(35, 92, 145);
+    box-shadow: 0px 7px rgb(35, 92, 145);
     border-radius: 10%;
     object-fit: cover;
     transition: 0.2s;
@@ -47,8 +67,8 @@ footer {
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: rgb(186, 195, 209);
-    color: white;
+    background-color: rgb(0, 0, 0);
+    color: var(--textColor);
     text-align: center;
   }
 
@@ -62,3 +82,51 @@ footer {
     cursor: not-allowed;
   }
   
+
+.leftpanel {
+    /* position: absolute; */
+    display: flex;
+    padding: 10px 0px;
+    left: 0vh;
+    font-size: 30px;
+    /* justify-content: space-between; */
+    flex-direction: column;
+}
+
+
+header {
+    background-color: var(--darkerMainColor);
+    height: 80px;
+    font-size: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 40px;
+}
+
+.betamount {
+    position: relative;
+    top: -43px;
+    left: 190px;
+}
+
+.totalamount {
+    position: absolute;
+    left: 140px;
+}
+
+#betamount, #mines {
+    background-color: var(--darkerMainColor);
+    color: var(--textColor);
+    border: 0px;
+    border-radius: blue;
+    height: 30px;
+}
+
+#betamount:hover,  #mines:hover {
+    border: 2px solid var(--thirdColor);
+}
+
+#mines {
+    
+}
