@@ -8,7 +8,7 @@
     <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Explosion-155624_icon.svg/2048px-Explosion-155624_icon.svg.png" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@100;200;300;400;500;600;700;800;900&family=Rokkitt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Urbanist:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Heebo:wght@100;200;300;400;500;600;700;800;900&family=Rokkitt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Urbanist:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
 <header>
@@ -17,9 +17,13 @@
 </header>
 <div class="container">
     <div class="leftpanel">
-        Bet amount: $<span class="betamount">1</span>
+        Bet amount: 
+        <br>
+        $
+        <span class="betamount">1</span>
         <form id="betsettings"> 
-            <input id="betamount" type="number" required>
+            <input id="betamount" type="number" placeholder="Bet amount" required >
+            <br>
             <select name="mines" id="mines">
                 <option value="5">Low (5)</option>
                 <option value="10">Medium (10)</option>
@@ -27,13 +31,18 @@
                 <option value="20">Very Hard (20)</option>
                 <option value="24">Test your luck (24)</option>
             </select>
+            <br>
             <input type="submit" value="BET" id="startgame">
         </form>
+        <br>
 
         <div class="cashoutsection">
-        Diamonds: <span class="ndiamonds">0</span>
+            Multiplier: 
+            <div class="multiplier">
+                Current: <span class="multcurrent">0</span>
+                Next: <span class="multnext">0</span>
+            </div>
         <br>
-        Bombs: <span class="nbombs">0</span>
             <p class="profit">Profit: <span class="nprofit">0</span></p>
             <button type="button" id="cashout">CASH OUT!</button>
             <div class="divider vertical"></div>
@@ -71,7 +80,7 @@
 <div class="bets">My bets</div>
     
     <footer>
-        <h2>reset account</h2>
+    
     </footer>
 
     <script type="module" src="./script.js"></script>

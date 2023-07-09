@@ -2,14 +2,14 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box; 
-    font-family: 'Heebo', sans-serif;
+    font-family: 'Caprasimo', cursive;
  }
 
 
 
 :root {
-    --mainColor: rgb(32, 52, 72);
-    --darkerMainColor: rgb(29, 38, 47);
+    --mainColor: rgb(235, 201, 177);
+    --darkerMainColor: rgb(118, 19, 19);
     --secondColor: rgb(58, 133, 204);
     --textColor: white;
     --thirdColor: rgb(204, 133, 58);
@@ -27,25 +27,29 @@
     color: var(--textColor);
     margin: 0;
     height: 100vh;
-    background-color: var(--mainColor);
+    /* background-color: var(--mainColor); */
+    background-image: url('https://img.freepik.com/premium-vector/casino-red-background-fly-oins-chips-vector-illustration_3482-3010.jpg?w=2000');
+    background-size: cover;
+    background-position: center;
+    /* filter: blur(5px); */
 } 
 
 .game {
-    border: solid rgb(255, 255, 255) 1px;
+    /* border: solid rgb(255, 255, 255) 1px; */
     display: flex;
     gap: 20px 18px;
     flex-direction: row;
     flex-wrap: wrap;
-    max-width: 550px;
+    max-width: 650px;
     left: 10px;
 }
 
 .box {
     background-color: var(--secondColor);
-    height: 80px;
-    width: 80px;
+    height: 107px;
+    width: 107px;
     /* border: solid rgb(255, 255, 255) 1px; */
-    box-shadow: 0px 7px rgb(35, 92, 145);
+    box-shadow: 0px 7px rgb(145, 35, 35);
     border-radius: 10%;
     object-fit: cover;
     transition: 0.2s;
@@ -54,11 +58,21 @@
     position: relative;
     text-align: center;
     line-height: 40px;
+    background-image: url('https://cdn.pixabay.com/photo/2016/05/24/12/04/gold-1412245_1280.png');
+    background-size: 120%;
+    background-position: center;
+    /* margin: 0px 10px 0px 0px; */
 }
 
 .box:hover {
     background-color: rgb(90, 162, 230);
-    top: 2px;
+    transform: translateY(-2px);
+    transition: 0.2s;
+}
+
+.box:active {
+    transform: translateY(4px);
+    transition: 0.05s;
 }
 
 footer {
@@ -67,7 +81,7 @@ footer {
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: rgb(0, 0, 0);
+    background-color: var(--darkerMainColor);
     color: var(--textColor);
     text-align: center;
   }
@@ -86,11 +100,19 @@ footer {
 .leftpanel {
     /* position: absolute; */
     display: flex;
-    padding: 10px 0px;
+    padding: 10px 10px 0px 10px;
     left: 0vh;
     font-size: 30px;
     /* justify-content: space-between; */
     flex-direction: column;
+    /* background-color: rgb(47, 26, 75); */
+    margin: 0px 100px 0px 0px;
+    /* border: 4px solid rgb(255, 234, 218); */
+    border-radius: 12px;
+    color: rgb(255, 255, 255);
+    background-image: url('https://media.istockphoto.com/id/157325009/photo/gold-bar.jpg?s=170667a&w=0&k=20&c=PbLWf_T3O0ECsuJC_KllRRhHHKzy9n71BN0JSovBs_A=');
+    background-size: 230%;
+    background-position: center;
 }
 
 
@@ -106,27 +128,77 @@ header {
 
 .betamount {
     position: relative;
-    top: -43px;
-    left: 190px;
+    top: -35px;
+    left: 20px;
 }
 
 .totalamount {
     position: absolute;
-    left: 140px;
+    left: 160px;
 }
 
 #betamount, #mines {
-    background-color: var(--darkerMainColor);
+    background-color: #ffeddf;
     color: var(--textColor);
     border: 0px;
-    border-radius: blue;
-    height: 30px;
+    border-radius: 10px;
+    height: 50px;
+    width: 230px;
+    padding: 10px 20px;
+    outline: none;
+    color: var(--darkerMainColor);
+    margin: 5px;
 }
 
 #betamount:hover,  #mines:hover {
-    border: 2px solid var(--thirdColor);
+    border: 3px solid var(--thirdColor);
 }
 
 #mines {
     
+}
+
+.multiplier {
+    font-size: 25px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    width: 200px;
+    padding: 5px 25px;
+    /* display: none; */
+}
+
+/* button styling */
+#startgame, #cashout {
+    font-size: 30px;
+    height: 50px; 
+    width: 210px;
+    margin: 20px 10px 0px 10px;
+    border-radius: 10px;
+    border: none;
+    color: rgb(255, 255, 255);
+    transition: 0.2s;
+
+}
+
+#startgame {
+    background-color: rgba(227,34,35,255);
+    border-bottom: 5px solid rgb(149, 48, 48);
+    border-top: 3px solid rgb(212, 81, 81);
+}
+
+#cashout {
+    background-color: rgba(160,0,0,255);
+    border-bottom: 5px solid rgb(141, 37, 37);
+    border-top: 3px solid rgb(207, 45, 45);
+}
+
+#startgame:hover, #cashout:hover {
+    transform: translateY(-2px);
+    transition: 0.2s;
+}
+
+#startgame:active, #cashout:active {
+    transform: translateY(4px);
+    transition: 0.05s;
 }
