@@ -44,37 +44,6 @@
     left: 10px;
 }
 
-.box {
-    background-color: var(--secondColor);
-    height: 107px;
-    width: 107px;
-    /* border: solid rgb(255, 255, 255) 1px; */
-    box-shadow: 0px 7px rgb(145, 35, 35);
-    border-radius: 10%;
-    object-fit: cover;
-    transition: 0.2s;
-    top: 0;
-    transition: top 0.1s;
-    position: relative;
-    text-align: center;
-    line-height: 40px;
-    background-image: url('https://cdn.pixabay.com/photo/2016/05/24/12/04/gold-1412245_1280.png');
-    background-size: 120%;
-    background-position: center;
-    /* margin: 0px 10px 0px 0px; */
-}
-
-.box:hover {
-    background-color: rgb(90, 162, 230);
-    transform: translateY(-2px);
-    transition: 0.2s;
-}
-
-.box:active {
-    transform: translateY(4px);
-    transition: 0.05s;
-}
-
 footer {
     position: fixed;
     height: 50px;
@@ -84,18 +53,18 @@ footer {
     background-color: var(--darkerMainColor);
     color: var(--textColor);
     text-align: center;
-  }
+}
 
 .divider, .vertical {
     border-right: 10px solid #888989;
     margin: 20px 20px;
 }
 
-  input[type="submit"]:disabled {
-    opacity: 0.5; /* Adjust the opacity to achieve the desired level of gray-out effect */
+input[type="submit"]:disabled {
+    opacity: 0.5;
     cursor: not-allowed;
-  }
-  
+}
+
 
 .leftpanel {
     /* position: absolute; */
@@ -129,7 +98,7 @@ header {
 .betamount {
     position: relative;
     top: -35px;
-    left: 20px;
+    left: 117px;
 }
 
 .totalamount {
@@ -201,4 +170,105 @@ header {
 #startgame:active, #cashout:active {
     transform: translateY(4px);
     transition: 0.05s;
+}
+
+/* board */
+.box {
+    background-color: var(--secondColor);
+    height: 107px;
+    width: 107px;
+    /* border: solid rgb(255, 255, 255) 1px; */
+    box-shadow: 0px 7px rgb(145, 35, 35);
+    border-radius: 10%;
+    object-fit: cover;
+    transition: 0.2s;
+    top: 0;
+    transition: top 0.1s;
+    position: relative;
+    text-align: center;
+    line-height: 40px;
+    background-image: url('https://cdn.pixabay.com/photo/2016/05/24/12/04/gold-1412245_1280.png');
+    background-size: 120%;
+    background-position: center;
+    /* margin: 0px 10px 0px 0px; */
+}
+
+.gold {
+    background-color: var(--secondColor);
+    height: 107px;
+    width: 107px;
+    /* border: solid rgb(255, 255, 255) 1px; */
+    box-shadow: 0px 7px rgb(145, 35, 35);
+    border-radius: 10%;
+    object-fit: cover;
+    transition: 0.2s;
+    transition: top 0.1s;
+    transition: transform 0.6s;
+    transition: opacity 0.6s;
+    top: 0;
+    position: relative;
+    text-align: center;
+    line-height: 40px;
+    background-image: url('https://api.time.com/wp-content/uploads/2014/08/145950402.jpg?quality=85&w=4096');
+    background-size: 100%;
+    background-position: center;
+    transform: rotateY(180deg);
+}
+
+.box:hover {
+    background-color: rgb(90, 162, 230);
+    transform: translateY(-2px);
+    transition: 0.2s;
+}
+
+.box:active {
+    transform: translateY(4px);
+    transition: 0.05s;
+}
+
+.box.gold {
+    transform: rotateY(180deg);
+  }
+  
+.box.bomb {
+    transform: rotateY(180deg);
+}
+
+.box img {
+display: none;
+}
+
+.box.gold img {
+display: block;
+}
+
+.box.bomb img {
+display: block;
+}
+
+.box.greyed-out {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+.bomb {
+    background-color: var(--secondColor);
+    height: 107px;
+    width: 107px;
+    /* border: solid rgb(255, 255, 255) 1px; */
+    box-shadow: 0px 7px rgb(145, 35, 35);
+    border-radius: 10%;
+    object-fit: cover;
+    transition: 0.2s;
+    transition: top 0.1s;
+    transition: transform 0.6s;
+    transition: opacity 0.6s;
+    top: 0;
+    position: relative;
+    text-align: center;
+    line-height: 40px;
+    background-image: url('https://media.istockphoto.com/id/842671590/vector/cartoon-bomb-illustration.jpg?s=612x612&w=0&k=20&c=jTzH12dWeRFqJwFzdgfuppVKSXxRN4bqP8ggewbjdxc=');
+    background-size: 110%;
+    background-position: center;
+    transform: rotateY(180deg);
 }
