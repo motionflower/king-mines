@@ -2,35 +2,74 @@ let diamondsAndBombs = [];
 let betSettings = document.querySelector(`#betsettings`);
 let balance;
 let bombClicked = false; 
+let cashoutClicked = false;
 let nprofitElement = document.querySelector(`.nprofit`);
-var cashoutbutton = document.getElementById("cashout");
-const nprofit = parseFloat(nprofitElement.textContent);
+let cashoutbutton = document.getElementById(`cashout`);
+
+var betbutton = document.getElementById("startgame");
+var boxes = document.querySelectorAll('.box');
+
+let nprofit = 0;
+
+cashoutbutton.addEventListener("click", function() {
+  // Assuming you have the initial balance stored in the `balance` variable
+  let balance = parseFloat(localStorage.getItem('balance'));
+  balance += nprofit;
+  // console.log("New balance:", balance);
+  localStorage.setItem('balance', balance.toString());
+  
+  // Update the .totalamount element with the new balance
+  document.querySelector('.totalamount').textContent = balance.toFixed(2);
+  
+  alert('Cashed out!');
+
+  cashoutClicked = true;
+
+  boxes.forEach(function(box) {
+    box.classList.add('greyed-out');
+    box.classList.remove('gold');
+    box.classList.remove('bomb');
+  });
+
+  // Reset the nprofit to 0 after cashing out
+  nprofitElement.innerHTML = "0";
+  betbutton.disabled = false;
+  cashoutbutton.disabled = true;
+});
+
+// Function to update nprofit with the actual profit value
+function updateProfit(profit) {
+  nprofit = profit;
+  nprofitElement.textContent = nprofit.toString();
+}
 
 balance = parseFloat(document.querySelector(`.totalamount`).textContent);
 localStorage.setItem('balance', balance.toString());
 
-
 document.addEventListener("DOMContentLoaded", function() {
-  var betbutton = document.getElementById("startgame");
-  var boxes = document.querySelectorAll('.box');
+  
+  betbutton.addEventListener("click", function(event) {
 
-  betbutton.addEventListener("click", function() {
-
-    if (nprofit > 0) {
-      cashoutbutton.addEventListener("click", function() {
-        // Assuming you have the initial balance stored in the `balance` variable
-        let balance = parseFloat(localStorage.getItem('balance'));
-        balance += nprofit;
-        console.log("New balance:", balance);
-        localStorage.setItem('balance', balance.toString());
-      });
-    }
-    
-    let bombClicked = false; 
+    bombClicked = false; 
+    cashoutClicked = false; 
     
     const betAmount = document.getElementById(`betamount`);
+    
+    balance -= betAmount.value.trim();
+    
+    console.log("New balance:", balance);
+    localStorage.setItem('balance', balance.toString());
+  
+  // Update the .totalamount element with the new balance
+    document.querySelector('.totalamount').textContent = balance.toFixed(2);
 
     if (betAmount.value.trim() === "") {
+      return;
+    }
+
+    if (betAmount.value == 0) {
+      alert(`value can't be 0`);
+      event.preventDefault();
       return;
     }
     
@@ -40,16 +79,18 @@ document.addEventListener("DOMContentLoaded", function() {
       return;
     }
     
-    // disable betbutton
+    //disable betbutton
     betbutton.disabled = true;
+
+    //enable cashoutbutton again
+    cashoutbutton.disabled = false;
     
     const difficulty = document.getElementById(`mines`);
     const generatedArray = generateArray();
     const position = findPositions(generatedArray);
     let profit = parseInt(betAmount.value);
-    
-    console.log(generatedArray);
-    console.log(betAmount.value);
+
+    console.log(`difficulty`, difficulty.value);
 
     boxes.forEach(function(box) {
       box.classList.remove('greyed-out');
@@ -59,7 +100,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // bet amount coding
     
-    let mines = 25 - difficulty.value;
+    let goldspots = 25 - difficulty.value;
+    console.log(goldspots);
     
     // Function to generate an array with a certain number of bombs
     function generateArray() {
@@ -94,6 +136,29 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     });
 
+    function calculateMultiplier(minesRemaining, goldSpotsClicked, totalGoldSpots, difficultylevel) {
+      // Calculate the ratio of gold spots clicked to total gold spots
+      const goldSpotRatio = goldSpotsClicked / totalGoldSpots;
+    
+      // Calculate the ratio of mines remaining to the total mines
+      const minesRatio = minesRemaining / totalGoldSpots;
+    
+      // Calculate the multiplier based on difficulty, gold spot ratio, and mines ratio
+      const multiplier = (1 + (1 - difficultylevel)) * (1 + goldSpotRatio - minesRatio);
+    
+      // Ensure the multiplier is at least 1 (no negative multipliers)
+      return Math.max(1, multiplier);
+    }
+    
+    // Example usage:
+    const difficultylevel = 0.5; // Adjust the difficulty as needed (between 0 and 1)
+    const totalGoldSpots = goldspots; // Total number of gold spots on the field
+    const minesRemaining = difficulty.value; // Number of mines remaining on the field
+    const goldSpotsClicked = 0; // Number of gold spots clicked so far
+    
+    const multiplier = calculateMultiplier(minesRemaining, goldSpotsClicked, totalGoldSpots, difficultylevel);
+    console.log(`Current Multiplier: ${multiplier}`);
+
     //when clicking on box, check array position 
     boxes.forEach((box, index) => {
       const clickHandler = () => {
@@ -101,6 +166,11 @@ document.addEventListener("DOMContentLoaded", function() {
         if (bombClicked) {
           return; // Exit the click handler if a bomb has already been clicked
         }
+
+        if (cashoutClicked) {
+          return; // Exit the click handler if the cashout has already been clicked
+        }
+
         const value = generatedArray[index];
         if (value === 1) {
           box.classList.add('bomb');
@@ -111,6 +181,7 @@ document.addEventListener("DOMContentLoaded", function() {
           });
           alert('You lost');
           betbutton.disabled = false;
+          cashoutbutton.disabled = true;
           profit = 0;
           nprofitElement.innerHTML = profit;
 
@@ -122,15 +193,15 @@ document.addEventListener("DOMContentLoaded", function() {
         } else if (value === 0) {
           box.classList.add('gold');
           profit *= 2;
-          nprofitElement.innerHTML = profit;
+          updateProfit(profit); 
           box.removeEventListener('click', clickHandler); // Remove the click event listener
           // Continue the game
+          goldSpotsClicked++;
+          minesRemaining--;
         }
       };
-    
+      
       box.addEventListener('click', clickHandler);
     });
-
-    console.log(position);
     });
   });
