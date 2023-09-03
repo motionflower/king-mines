@@ -1,6 +1,6 @@
 let diamondsAndBombs = [];
 let betSettings = document.querySelector(`#betsettings`);
-let balance;
+let balance = parseFloat(localStorage.getItem('balance')) || 10;
 let bombClicked = false; 
 let cashoutClicked = false;
 let nprofitElement = document.querySelector(`.nprofit`);
@@ -11,15 +11,23 @@ var boxes = document.querySelectorAll('.box');
 
 let nprofit = 0;
 
+function updateBalanceInLocalStorage() {	
+  localStorage.setItem('balance', balance.toString());	
+}
+
+function updateUIBalance() {
+  document.querySelector('.totalamount').textContent = balance.toFixed(2);
+}
+
 cashoutbutton.addEventListener("click", function() {
   // Assuming you have the initial balance stored in the `balance` variable
-  let balance = parseFloat(localStorage.getItem('balance'));
   balance += nprofit;
-  // console.log("New balance:", balance);
-  localStorage.setItem('balance', balance.toString());
+  updateBalanceInLocalStorage();
+
+  console.log(`cashout balance`, balance);
   
   // Update the .totalamount element with the new balance
-  document.querySelector('.totalamount').textContent = balance.toFixed(2);
+  updateUIBalance();
   
   alert('Cashed out!');
 
@@ -43,38 +51,36 @@ function updateProfit(profit) {
   nprofitElement.textContent = nprofit.toString();
 }
 
-balance = parseFloat(document.querySelector(`.totalamount`).textContent);
-localStorage.setItem('balance', balance.toString());
-
 document.addEventListener("DOMContentLoaded", function() {
-  
-  betbutton.addEventListener("click", function(event) {
+  balance = parseFloat(localStorage.getItem('balance')) || 10;
+  console.log(`balance when reload`, balance);
+  updateUIBalance();
 
+  betbutton.addEventListener("click", function(event) {
     bombClicked = false; 
     cashoutClicked = false; 
     
     const betAmount = document.getElementById(`betamount`);
     
-    balance -= betAmount.value.trim();
-    
-    console.log("New balance:", balance);
-    localStorage.setItem('balance', balance.toString());
-  
-  // Update the .totalamount element with the new balance
-    document.querySelector('.totalamount').textContent = balance.toFixed(2);
+    if (parseInt(betAmount.value) > balance) {
+      alert(`not enough balance`);
+      event.preventDefault();
+      return;
+    }
+    else {
+      balance -= betAmount.value.trim();
+      updateUIBalance();
+      updateBalanceInLocalStorage();
+    }
 
+    console.log(`balance`, balance);
+  
     if (betAmount.value.trim() === "") {
       return;
     }
 
     if (betAmount.value == 0) {
       alert(`value can't be 0`);
-      event.preventDefault();
-      return;
-    }
-    
-    if (parseInt(betAmount.value) > balance) {
-      alert(`not enough balance`);
       event.preventDefault();
       return;
     }
