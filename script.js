@@ -4,12 +4,27 @@ let balance = parseFloat(localStorage.getItem('balance')) || 10;
 let bombClicked = false; 
 let cashoutClicked = false;
 let nprofitElement = document.querySelector(`.nprofit`);
+let multCurrentDisplayed = document.querySelector(`.multcurrent`);
+let multNextDisplayed = document.querySelector(`.multnext`);
 let cashoutbutton = document.getElementById(`cashout`);
+let resetbutton = document.getElementById(`resetbalance`);
 
 var betbutton = document.getElementById("startgame");
 var boxes = document.querySelectorAll('.box');
 
 let nprofit = 0;
+
+function toggleBar() {
+  const slidingBar = document.getElementById("sliding-bar");
+  if (slidingBar.style.width === "0px" || slidingBar.style.width === "") {
+      slidingBar.style.width = "400px"; // Adjust the width as needed
+  } else {
+      slidingBar.style.width = "0";
+  }
+}
+
+const clickableText = document.querySelector(".clickable-text");
+  clickableText.addEventListener("click", toggleBar);
 
 function updateBalanceInLocalStorage() {	
   localStorage.setItem('balance', balance.toString());	
@@ -21,6 +36,8 @@ function updateUIBalance() {
 
 cashoutbutton.addEventListener("click", function() {
   // Assuming you have the initial balance stored in the `balance` variable
+  console.log(`nprofit`, nprofit);
+  console.log(`balance`, balance);
   balance += nprofit;
   updateBalanceInLocalStorage();
 
@@ -52,6 +69,8 @@ function updateProfit(profit) {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
+
+
   balance = parseFloat(localStorage.getItem('balance')) || 10;
   console.log(`balance when reload`, balance);
   updateUIBalance();
@@ -140,30 +159,29 @@ document.addEventListener("DOMContentLoaded", function() {
       if (position >= 0 && position < boxes.length) {
         boxes[position].textContent = `?`;
       }
-    });
+    });  
 
-    function calculateMultiplier(minesRemaining, goldSpotsClicked, totalGoldSpots, difficultylevel) {
-      // Calculate the ratio of gold spots clicked to total gold spots
-      const goldSpotRatio = goldSpotsClicked / totalGoldSpots;
+    let multiplier = 1; // Initial multiplier of clicking a bomb
+
+    // Define the exponential base
+    let growthBase = 1.05; // You can change this value for different exponential growth rates
     
-      // Calculate the ratio of mines remaining to the total mines
-      const minesRatio = minesRemaining / totalGoldSpots;
-    
-      // Calculate the multiplier based on difficulty, gold spot ratio, and mines ratio
-      const multiplier = (1 + (1 - difficultylevel)) * (1 + goldSpotRatio - minesRatio);
-    
-      // Ensure the multiplier is at least 1 (no negative multipliers)
-      return Math.max(1, multiplier);
+    // Variable to keep track of the exponent
+    let exponent = 1;
+
+    // function to calculate multiplier
+    function clickGoldTile() {
+      // Update the multiplier exponentially
+      multiplier *= Math.pow(growthBase, exponent);
+      exponent++; // Increment the exponent for the next click
+      
+      // Return the updated multiplier
+      return multiplier;
     }
     
     // Example usage:
-    const difficultylevel = 0.5; // Adjust the difficulty as needed (between 0 and 1)
-    const totalGoldSpots = goldspots; // Total number of gold spots on the field
-    const minesRemaining = difficulty.value; // Number of mines remaining on the field
-    const goldSpotsClicked = 0; // Number of gold spots clicked so far
-    
-    const multiplier = calculateMultiplier(minesRemaining, goldSpotsClicked, totalGoldSpots, difficultylevel);
-    console.log(`Current Multiplier: ${multiplier}`);
+    console.log("Initial multiplier: " + multiplier); // Initial multiplier
+
 
     //when clicking on box, check array position 
     boxes.forEach((box, index) => {
@@ -190,6 +208,8 @@ document.addEventListener("DOMContentLoaded", function() {
           cashoutbutton.disabled = true;
           profit = 0;
           nprofitElement.innerHTML = profit;
+          multCurrentDisplayed.innerHTML = 0;
+          multNextDisplayed.innerHTML = 0;
 
           // make grid not clickable
           boxes.forEach((tile) => {
@@ -198,16 +218,28 @@ document.addEventListener("DOMContentLoaded", function() {
 
         } else if (value === 0) {
           box.classList.add('gold');
-          profit *= 2;
-          updateProfit(profit); 
           box.removeEventListener('click', clickHandler); // Remove the click event listener
-          // Continue the game
-          goldSpotsClicked++;
-          minesRemaining--;
+          multiplier = clickGoldTile();
+          profit = (Math.round(betAmount.value.trim() * multiplier * 100) / 100);
+          updateProfit(profit); 
+          console.log(`profit`, profit);
+
+          if (multiplier < 10) {
+            multCurrentDisplayed.innerHTML = (Math.round(multiplier * 100) / 100) + `x`;
+            // multNextDisplayed.innerHTML = (Math.round(multiplier * 100) / 100) + `x`;
+          }
+          else {
+            multCurrentDisplayed.innerHTML = Math.trunc(multiplier) + `x`;
+            // multNextDisplayed.innerHTML = (Math.trunc(multiplier) + `x`;
+          }
+
+          console.log("After Click " + multiplier);
+
         }
       };
-      
       box.addEventListener('click', clickHandler);
     });
     });
   });
+
+  

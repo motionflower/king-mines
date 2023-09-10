@@ -20,7 +20,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 70vh;
+    overflow: hidden;
+    margin-top: 10vh;
 }
 
  body {
@@ -34,6 +36,20 @@
     /* filter: blur(5px); */
 } 
 
+.clickable-text {
+    cursor: pointer;
+}
+
+.slide-bar {
+    width: 0;
+    height: 100%;
+    background-color: rgb(144, 43, 43);
+    position: fixed;
+    top: 80px;
+    right: 0px;
+    transition: width 0.3s ease-in-out;
+}
+
 .game {
     /* border: solid rgb(255, 255, 255) 1px; */
     display: flex;
@@ -42,17 +58,6 @@
     flex-wrap: wrap;
     max-width: 650px;
     left: 10px;
-}
-
-footer {
-    position: fixed;
-    height: 50px;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: var(--darkerMainColor);
-    color: var(--textColor);
-    text-align: center;
 }
 
 .divider, .vertical {
@@ -93,6 +98,20 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 10px 40px;
+    overflow: hidden;
+}
+
+footer {
+    position: fixed;
+    height: 50px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: var(--darkerMainColor);
+    color: var(--textColor);
+    text-align: center;
+    overflow: hidden;
 }
 
 .betamount {
@@ -130,36 +149,54 @@ header {
 .multiplier {
     font-size: 25px;
     display: flex;
-    gap: 10px;
+    gap: 5px 44px;
     flex-wrap: wrap;
-    width: 200px;
-    padding: 5px 25px;
-    /* display: none; */
+    width: 260px;
+    padding: 20px 0px 10px 5px;
+}
+
+.multcurrent {
+    position: relative;
+    left: -15px;
+}
+
+.multnext {
+    position: relative;
+    left: 28px;
 }
 
 /* button styling */
-#startgame, #cashout {
+#startgame, #cashout, #resetbalance {
     font-size: 30px;
     height: 50px; 
-    width: 210px;
     margin: 20px 10px 0px 10px;
     border-radius: 10px;
     border: none;
     color: rgb(255, 255, 255);
     transition: 0.2s;
+}
 
+#resetbalance {
+    margin: 30px 20px 20px 50px;
+    width: 300px;
+    background-color: rgb(45, 53, 139);
+    border-bottom: 5px solid rgb(36, 41, 99);
+    border-top: 3px solid rgb(75, 59, 174);
+    height: 60px;
 }
 
 #startgame {
     background-color: rgba(227,34,35,255);
     border-bottom: 5px solid rgb(149, 48, 48);
     border-top: 3px solid rgb(212, 81, 81);
+    width: 220px;
 }
 
 #cashout {
     background-color: rgba(160,0,0,255);
     border-bottom: 5px solid rgb(141, 37, 37);
     border-top: 3px solid rgb(207, 45, 45);
+    width: 220px;
 }
 
 #startgame:hover, #cashout:hover {
