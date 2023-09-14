@@ -5,14 +5,17 @@ let bombClicked = false;
 let cashoutClicked = false;
 let nprofitElement = document.querySelector(`.nprofit`);
 let multCurrentDisplayed = document.querySelector(`.multcurrent`);
+let cashoutButtonDisplay = document.querySelector(`.cashoutamount`);
 let multNextDisplayed = document.querySelector(`.multnext`);
 let cashoutbutton = document.getElementById(`cashout`);
 let resetbutton = document.getElementById(`resetbalance`);
+const cashoutpopup = document.getElementById("cashoutpopup");
 
 var betbutton = document.getElementById("startgame");
 var boxes = document.querySelectorAll('.box');
 
 let nprofit = 0;
+// Define the exponential base
 
 function toggleBar() {
   const slidingBar = document.getElementById("sliding-bar");
@@ -23,9 +26,6 @@ function toggleBar() {
   }
 }
 
-const clickableText = document.querySelector(".clickable-text");
-  clickableText.addEventListener("click", toggleBar);
-
 function updateBalanceInLocalStorage() {	
   localStorage.setItem('balance', balance.toString());	
 }
@@ -34,32 +34,55 @@ function updateUIBalance() {
   document.querySelector('.totalamount').textContent = balance.toFixed(2);
 }
 
-cashoutbutton.addEventListener("click", function() {
-  // Assuming you have the initial balance stored in the `balance` variable
-  console.log(`nprofit`, nprofit);
-  console.log(`balance`, balance);
-  balance += nprofit;
+
+resetbutton.addEventListener("click", function() {
+  balance = 100;
+  console.log(`balance reset`, balance);
   updateBalanceInLocalStorage();
-
-  console.log(`cashout balance`, balance);
-  
-  // Update the .totalamount element with the new balance
   updateUIBalance();
+});
+
+cashoutbutton.addEventListener("click", function() {
+  if (nprofit > 0) {
+    cashoutClicked = true;
+    // Assuming you have the initial balance stored in the `balance` variable
+    console.log(`nprofit`, nprofit);
+    console.log(`balance`, balance);
+    balance += nprofit;
+    updateBalanceInLocalStorage();
   
-  alert('Cashed out!');
-
-  cashoutClicked = true;
-
-  boxes.forEach(function(box) {
-    box.classList.add('greyed-out');
-    box.classList.remove('gold');
-    box.classList.remove('bomb');
-  });
-
-  // Reset the nprofit to 0 after cashing out
-  nprofitElement.innerHTML = "0";
-  betbutton.disabled = false;
-  cashoutbutton.disabled = true;
+    console.log(`cashout balance`, balance);
+    
+    // Update the .totalamount element with the new balance
+    updateUIBalance();
+    
+    
+    multCurrentDisplayed.innerHTML = 0;
+    cashoutButtonDisplay.innerHTML = nprofit;
+    
+    console.log(cashoutButtonDisplay);
+    
+    if (cashoutpopup.style.display === "block") {
+      cashoutpopup.style.display = "none"; // Hide the cashoutpopup
+    } else {
+      cashoutpopup.style.display = "block"; // Show the cashoutpopup
+      setTimeout(() => {
+          cashoutpopup.style.display = "none"; // Hide the cashoutpopup after 3 seconds
+      }, 3000); // Change to 3000 milliseconds (3 seconds)
+    }
+  
+    boxes.forEach(function(box) {
+      box.classList.add('greyed-out');
+      box.classList.remove('gold');
+      box.classList.remove('bomb');
+    });
+  
+    // Reset the nprofit to 0 after cashing out
+    nprofitElement.innerHTML = "0";
+    betbutton.disabled = false;
+    cashoutbutton.disabled = true;
+  }
+  nprofit = 0;
 });
 
 // Function to update nprofit with the actual profit value
@@ -123,8 +146,6 @@ document.addEventListener("DOMContentLoaded", function() {
       box.classList.remove('bomb');
     });
 
-    // bet amount coding
-    
     let goldspots = 25 - difficulty.value;
     console.log(goldspots);
     
@@ -155,17 +176,35 @@ document.addEventListener("DOMContentLoaded", function() {
     
     // put a question mark on the divs that should have the bomb
     // also will display a bomb and grey out betbutton and div again 
-    position.forEach(position => {
-      if (position >= 0 && position < boxes.length) {
-        boxes[position].textContent = `?`;
-      }
-    });  
+    // position.forEach(position => {
+    //   if (position >= 0 && position < boxes.length) {
+    //     boxes[position].textContent = `?`;
+    //   }
+    // });  
 
     let multiplier = 1; // Initial multiplier of clicking a bomb
 
-    // Define the exponential base
-    let growthBase = 1.05; // You can change this value for different exponential growth rates
-    
+    let growthBase = 1;
+
+    //set multiplier based on difficulty
+    if (difficulty.value == 5) {
+      growthBase = 1.05;
+    }
+    else if (difficulty.value == 10) {
+      growthBase = 1.10;
+    }
+    else if (difficulty.value == 15) {
+      growthBase = 1.20;
+    }
+    else if (difficulty.value == 20) {
+      growthBase = 2;
+    }
+    else if (difficulty.value == 24) {
+      growthBase = 100;
+    }
+
+    console.log(`growth`, growthBase);
+
     // Variable to keep track of the exponent
     let exponent = 1;
 
@@ -182,7 +221,6 @@ document.addEventListener("DOMContentLoaded", function() {
     // Example usage:
     console.log("Initial multiplier: " + multiplier); // Initial multiplier
 
-
     //when clicking on box, check array position 
     boxes.forEach((box, index) => {
       const clickHandler = () => {
@@ -196,6 +234,13 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         const value = generatedArray[index];
+
+        console.log(`generated array 1`, generatedArray[index]);
+        
+        // function revealAllTiles(value) {
+               
+        //   }   
+
         if (value === 1) {
           box.classList.add('bomb');
           bombClicked = true;
@@ -203,7 +248,16 @@ document.addEventListener("DOMContentLoaded", function() {
             box.classList.add('greyed-out');
             box.removeEventListener('click', clickHandler);
           });
-          alert('You lost');
+          //reveal all spots
+          // revealAllTiles();
+          boxes.forEach(function(box) {
+            if (value === 1) {
+                box.classList.add('bomb'); // Add a class to display bombs
+              } else {
+                box.classList.add('gold'); // Add a class to display gold
+              }
+            }); 
+
           betbutton.disabled = false;
           cashoutbutton.disabled = true;
           profit = 0;

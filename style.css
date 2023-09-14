@@ -169,16 +169,18 @@ footer {
 #startgame, #cashout, #resetbalance {
     font-size: 30px;
     height: 50px; 
-    margin: 20px 10px 0px 10px;
+    margin: 20px 10px 5px 10px;
     border-radius: 10px;
     border: none;
     color: rgb(255, 255, 255);
     transition: 0.2s;
 }
 
+/* buttons */
 #resetbalance {
+    font-size: 25px;
     margin: 30px 20px 20px 50px;
-    width: 300px;
+    width: 250px;
     background-color: rgb(45, 53, 139);
     border-bottom: 5px solid rgb(36, 41, 99);
     border-top: 3px solid rgb(75, 59, 174);
@@ -199,12 +201,12 @@ footer {
     width: 220px;
 }
 
-#startgame:hover, #cashout:hover {
+#startgame:hover, #cashout:hover, #resetbalance:hover {
     transform: translateY(-2px);
     transition: 0.2s;
 }
 
-#startgame:active, #cashout:active {
+#startgame:active, #cashout:active, #resetbalance:active {
     transform: translateY(4px);
     transition: 0.05s;
 }
@@ -308,4 +310,37 @@ display: block;
     background-size: 110%;
     background-position: center;
     transform: rotateY(180deg);
+}
+
+.cashoutpopup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    padding: 20px;
+    background-color: #149400;
+    /* border: px solid #ccc; */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    color: #ffffff; /* Set the text color to black */
+    animation: explodeAndHide 2.5s forwards;
+    border-bottom: 5px solid #29761d;
+    border-top: 5px solid #45a336;
+}
+
+@keyframes explodeAndHide {
+    0% {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 1;
+    }
+    80% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 0;
+        display: none;
+    }
 }

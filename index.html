@@ -13,12 +13,9 @@
 <body>
 <header>
     Total: $<span class="totalamount">100</span>
-    <p class="clickable-text" onclick="toggleBar()">Profile</p> 
+    <input type="submit" value="RESET BALANCE" id="resetbalance">
 </header>
 <div class="container">
-    <div id="sliding-bar" class="slide-bar">
-        <input type="submit" value="RESET BALANCE" id="resetbalance">
-    </div>
     <div class="leftpanel">
         Total: $
         <span class="betamount">1</span>
@@ -47,6 +44,7 @@
             <p class="profit">Profit: <span class="nprofit">0</span></p>
             <button type="submit" id="cashout">CASH OUT!</button>
             <div class="divider vertical"></div>
+            <div id="cashoutpopup" class="cashoutpopup">Cashed out: $<span class="cashoutamount">0</span></div>
             </div>
         </div>
     <div class="game">
