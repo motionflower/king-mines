@@ -230,6 +230,7 @@ footer {
     background-size: 120%;
     background-position: center;
     /* margin: 0px 10px 0px 0px; */
+    transition: opacity 2s ease-in-out;
 }
 
 .gold {

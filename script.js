@@ -42,49 +42,6 @@ resetbutton.addEventListener("click", function() {
   updateUIBalance();
 });
 
-cashoutbutton.addEventListener("click", function() {
-  if (nprofit > 0) {
-    cashoutClicked = true;
-    // Assuming you have the initial balance stored in the `balance` variable
-    console.log(`nprofit`, nprofit);
-    console.log(`balance`, balance);
-    balance += nprofit;
-    updateBalanceInLocalStorage();
-  
-    console.log(`cashout balance`, balance);
-    
-    // Update the .totalamount element with the new balance
-    updateUIBalance();
-    
-    
-    multCurrentDisplayed.innerHTML = 0;
-    cashoutButtonDisplay.innerHTML = nprofit;
-    
-    console.log(cashoutButtonDisplay);
-    
-    if (cashoutpopup.style.display === "block") {
-      cashoutpopup.style.display = "none"; // Hide the cashoutpopup
-    } else {
-      cashoutpopup.style.display = "block"; // Show the cashoutpopup
-      setTimeout(() => {
-          cashoutpopup.style.display = "none"; // Hide the cashoutpopup after 3 seconds
-      }, 3000); // Change to 3000 milliseconds (3 seconds)
-    }
-  
-    boxes.forEach(function(box) {
-      box.classList.add('greyed-out');
-      box.classList.remove('gold');
-      box.classList.remove('bomb');
-    });
-  
-    // Reset the nprofit to 0 after cashing out
-    nprofitElement.innerHTML = "0";
-    betbutton.disabled = false;
-    cashoutbutton.disabled = true;
-  }
-  nprofit = 0;
-});
-
 // Function to update nprofit with the actual profit value
 function updateProfit(profit) {
   nprofit = profit;
@@ -138,7 +95,25 @@ document.addEventListener("DOMContentLoaded", function() {
     const position = findPositions(generatedArray);
     let profit = parseInt(betAmount.value);
 
-    console.log(`difficulty`, difficulty.value);
+    function revealAllTiles() {
+      boxes.forEach(function (box, i) {
+        const tileValue = generatedArray[i];
+    
+        setTimeout(() => {
+          if (tileValue === 0) {
+            box.classList.add('gold'); // Add a class to display gold
+          } else if (tileValue === 1) {
+            box.classList.add('bomb'); // Add a class to display bombs
+          }
+    
+          setTimeout(() => {
+            box.classList.remove('greyed-out');
+          }, 1000); // Adjust the class removal delay as needed
+        }, i * 20); // Adjust the delay between tile reveals as needed
+      });
+    }
+
+    console.log(`generated array`, generatedArray);
 
     boxes.forEach(function(box) {
       box.classList.remove('greyed-out');
@@ -147,8 +122,8 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     let goldspots = 25 - difficulty.value;
-    console.log(goldspots);
-    
+    console.log(`goldspots`, goldspots);
+
     // Function to generate an array with a certain number of bombs
     function generateArray() {
       const array = Array(25).fill(0); // Fill the array with 25 zeros
@@ -191,13 +166,13 @@ document.addEventListener("DOMContentLoaded", function() {
       growthBase = 1.05;
     }
     else if (difficulty.value == 10) {
-      growthBase = 1.10;
+      growthBase = 1.5;
     }
     else if (difficulty.value == 15) {
-      growthBase = 1.20;
+      growthBase = 2;
     }
     else if (difficulty.value == 20) {
-      growthBase = 2;
+      growthBase = 6;
     }
     else if (difficulty.value == 24) {
       growthBase = 100;
@@ -221,43 +196,68 @@ document.addEventListener("DOMContentLoaded", function() {
     // Example usage:
     console.log("Initial multiplier: " + multiplier); // Initial multiplier
 
+    cashoutbutton.addEventListener("click", function() {
+  if (nprofit > 0) {
+    cashoutClicked = true;
+    // Assuming you have the initial balance stored in the `balance` variable
+    console.log(`nprofit`, nprofit);
+    console.log(`balance`, balance);
+    balance += nprofit;
+    updateBalanceInLocalStorage();
+  
+    console.log(`cashout balance`, balance);
+    
+    // Update the .totalamount element with the new balance
+    updateUIBalance();
+    revealAllTiles();
+    
+    multCurrentDisplayed.innerHTML = 0;
+    cashoutButtonDisplay.innerHTML = nprofit;
+    
+    console.log(cashoutButtonDisplay);
+    
+    if (cashoutpopup.style.display === "block") {
+      cashoutpopup.style.display = "none"; // Hide the cashoutpopup
+    } else {
+      cashoutpopup.style.display = "block"; // Show the cashoutpopup
+      setTimeout(() => {
+          cashoutpopup.style.display = "none"; // Hide the cashoutpopup after 3 seconds
+      }, 3000); // Change to 3000 milliseconds (3 seconds)
+    }
+  
+    // Reset the nprofit to 0 after cashing out
+    nprofitElement.innerHTML = "0";
+    betbutton.disabled = false;
+    cashoutbutton.disabled = true;
+  }
+  nprofit = 0;
+});
+
     //when clicking on box, check array position 
     boxes.forEach((box, index) => {
       const clickHandler = () => {
-
-        if (bombClicked) {
-          return; // Exit the click handler if a bomb has already been clicked
-        }
-
-        if (cashoutClicked) {
-          return; // Exit the click handler if the cashout has already been clicked
-        }
-
-        const value = generatedArray[index];
-
-        console.log(`generated array 1`, generatedArray[index]);
-        
-        // function revealAllTiles(value) {
-               
-        //   }   
-
+  
+          if (bombClicked) {
+              return; // Exit the click handler if a bomb has already been clicked
+          }
+  
+          if (cashoutClicked) {
+              return; // Exit the click handler if the cashout has already been clicked
+          }
+  
+          const value = generatedArray[index];
+  
+          console.log(`generated array 1`, generatedArray[index]);
+  
         if (value === 1) {
           box.classList.add('bomb');
           bombClicked = true;
           boxes.forEach(function(box) {
             box.classList.add('greyed-out');
             box.removeEventListener('click', clickHandler);
+            //reveal all spots
           });
-          //reveal all spots
-          // revealAllTiles();
-          boxes.forEach(function(box) {
-            if (value === 1) {
-                box.classList.add('bomb'); // Add a class to display bombs
-              } else {
-                box.classList.add('gold'); // Add a class to display gold
-              }
-            }); 
-
+          revealAllTiles();
           betbutton.disabled = false;
           cashoutbutton.disabled = true;
           profit = 0;
