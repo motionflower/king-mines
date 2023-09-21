@@ -16,7 +16,6 @@
 } 
 
 .container {
-    /* background-color: rgb(116, 80, 33); */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -29,8 +28,8 @@
     color: var(--textColor);
     margin: 0;
     height: 100vh;
-    /* background-color: var(--mainColor); */
-    background-image: url('https://img.freepik.com/premium-vector/casino-red-background-fly-oins-chips-vector-illustration_3482-3010.jpg?w=2000');
+    background-color: var(--mainColor);
+    /* background-image: url('https://img.freepik.com/premium-vector/casino-red-background-fly-oins-chips-vector-illustration_3482-3010.jpg?w=2000'); */
     background-size: cover;
     background-position: center;
     /* filter: blur(5px); */
@@ -52,13 +51,26 @@
 
 .game {
     /* border: solid rgb(255, 255, 255) 1px; */
+    position: relative;
+    z-index: 1; 
     display: flex;
-    gap: 20px 18px;
+    gap: 7px 7px;
     flex-direction: row;
     flex-wrap: wrap;
     max-width: 650px;
-    left: 10px;
+    left: 10px
 }
+
+.frame {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /* background-image: url('https://cdn.discordapp.com/attachments/902276985777176617/1154438916817031289/tile_frame_beta.png'); */
+    background-attachment: fixed; /* Keep the background image fixed within the frame */
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+  }
 
 .divider, .vertical {
     border-right: 10px solid #888989;
@@ -77,11 +89,9 @@ input[type="submit"]:disabled {
     padding: 10px 10px 0px 10px;
     left: 0vh;
     font-size: 30px;
-    /* justify-content: space-between; */
     flex-direction: column;
     /* background-color: rgb(47, 26, 75); */
     margin: 0px 100px 0px 0px;
-    /* border: 4px solid rgb(255, 234, 218); */
     border-radius: 12px;
     color: rgb(255, 255, 255);
     background-image: url('https://media.istockphoto.com/id/157325009/photo/gold-bar.jpg?s=170667a&w=0&k=20&c=PbLWf_T3O0ECsuJC_KllRRhHHKzy9n71BN0JSovBs_A=');
@@ -138,12 +148,12 @@ footer {
     margin: 5px;
 }
 
-#betamount:hover,  #mines:hover {
-    border: 3px solid var(--thirdColor);
+#betamount:disabled {
+    opacity: 0.7;
 }
 
-#mines {
-    
+#betamount:hover,  #mines:hover {
+    border: 3px solid var(--thirdColor);
 }
 
 .multiplier {
@@ -212,12 +222,13 @@ footer {
 }
 
 /* board */
-.box {
-    background-color: var(--secondColor);
-    height: 107px;
-    width: 107px;
-    /* border: solid rgb(255, 255, 255) 1px; */
-    box-shadow: 0px 7px rgb(145, 35, 35);
+.tile {
+    background-color: transparent !important;
+    height: 122px;
+    width: 122px;
+    perspective: 1000px; /* Add perspective for 3D effect */
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease-in-out;
     border-radius: 10%;
     object-fit: cover;
     transition: 0.2s;
@@ -226,17 +237,18 @@ footer {
     position: relative;
     text-align: center;
     line-height: 40px;
-    background-image: url('https://cdn.pixabay.com/photo/2016/05/24/12/04/gold-1412245_1280.png');
-    background-size: 120%;
+    background-image: url('https://cdn.discordapp.com/attachments/902276985777176617/1154128910112526427/tile_1.png');
+    background-size: 100%;
     background-position: center;
     /* margin: 0px 10px 0px 0px; */
-    transition: opacity 2s ease-in-out;
+    /* transition: opacity 2s ease-in-out; */
+    z-index: 1;
 }
 
 .gold {
     background-color: var(--secondColor);
-    height: 107px;
-    width: 107px;
+    height: 122px;
+    width: 122px;
     /* border: solid rgb(255, 255, 255) 1px; */
     box-shadow: 0px 7px rgb(145, 35, 35);
     border-radius: 10%;
@@ -255,46 +267,54 @@ footer {
     transform: rotateY(180deg);
 }
 
-.box:hover {
+.tile:hover {
     background-color: rgb(90, 162, 230);
-    transform: translateY(-2px);
-    transition: 0.2s;
+    transition: transform 0.5s ease-in-out; 
+    /* animation: tilt 1s;
+    animation-iteration-count: 4;
+    animation-play-state: running;  */
+    /* transition: 0.2s; */
 }
 
-.box:active {
+.tile:not(:hover) {
+    transform: none;
+}
+
+
+.tile:active {
     transform: translateY(4px);
     transition: 0.05s;
 }
 
-.box.gold {
+.tile.gold {
     transform: rotateY(180deg);
   }
   
-.box.bomb {
+.tile.bomb {
     transform: rotateY(180deg);
 }
 
-.box img {
+.tile img {
 display: none;
 }
 
-.box.gold img {
+.tile.gold img {
 display: block;
 }
 
-.box.bomb img {
+.tile.bomb img {
 display: block;
 }
 
-.box.greyed-out {
+.tile.greyed-out {
     opacity: 0.6;
     cursor: not-allowed;
   }
 
 .bomb {
     background-color: var(--secondColor);
-    height: 107px;
-    width: 107px;
+    height: 122px;
+    width: 122px;
     /* border: solid rgb(255, 255, 255) 1px; */
     box-shadow: 0px 7px rgb(145, 35, 35);
     border-radius: 10%;

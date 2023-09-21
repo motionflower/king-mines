@@ -12,7 +12,58 @@ let resetbutton = document.getElementById(`resetbalance`);
 const cashoutpopup = document.getElementById("cashoutpopup");
 
 var betbutton = document.getElementById("startgame");
-var boxes = document.querySelectorAll('.box');
+var minesInput = document.getElementById("mines");
+var betAmountInput = document.getElementById("betamount");
+var boxes = document.querySelectorAll('.tile');
+
+// ANIMATIONS SECTION
+
+boxes.forEach((box) => {
+    let isPressed = false;
+
+    box.addEventListener('mouseenter', () => {
+        if (!isPressed) {
+            box.style.transition = 'transform 0.1s ease-in-out'; // Add transition on hover
+            box.style.transform = 'rotateX(20deg) rotateY(20deg)'; // Rotate slightly on hover
+        }
+    });
+
+    function backAndForthAnimation() {
+      box.style.transition = 'transform 0.5s ease-in-out'; // Add transition for back and forth
+      box.style.transform = 'rotateX(0deg) rotateY(0deg)'; // Rotate back slightly
+
+      timeoutId = setTimeout(() => {
+          resetRotation(); // Reset rotation
+          timeoutId = null;
+      }, 1000); // Adjust the timing for back and forth and stopping
+  }
+
+    box.addEventListener('mouseleave', () => {
+        if (!isPressed) {
+            box.style.transition = 'transform 0.2s ease-in-out'; // Add transition on hover out
+            box.style.transform = 'rotateX(0deg) rotateY(0deg)'; // Reset rotation
+            backAndForthAnimation();
+        }
+    });
+
+    box.addEventListener('mousedown', () => {
+        isPressed = true;
+        box.style.transition = 'transform 0.2s ease-in-out'; // Add transition on press
+        box.style.transform = 'rotateX(40deg) rotateY(40deg)'; // Rotate to the specified angle
+    });
+
+    box.addEventListener('mouseup', () => {
+        if (isPressed) {
+            // Allow the hover animation to take over when not pressed
+            box.style.transition = 'transform 0.2s ease-in-out'; // Add transition on release
+            box.style.transform = 'rotateX(20deg) rotateY(20deg)'; // Return to hover state
+            isPressed = false;
+        }
+    });
+});
+
+
+// CODE SECTION
 
 let nprofit = 0;
 // Define the exponential base
@@ -48,6 +99,7 @@ function updateProfit(profit) {
   nprofitElement.textContent = nprofit.toString();
 }
 
+// when page loads
 document.addEventListener("DOMContentLoaded", function() {
 
 
@@ -55,10 +107,11 @@ document.addEventListener("DOMContentLoaded", function() {
   console.log(`balance when reload`, balance);
   updateUIBalance();
 
+  // bet button
   betbutton.addEventListener("click", function(event) {
     bombClicked = false; 
     cashoutClicked = false; 
-    
+
     const betAmount = document.getElementById(`betamount`);
     
     if (parseInt(betAmount.value) > balance) {
@@ -70,6 +123,8 @@ document.addEventListener("DOMContentLoaded", function() {
       balance -= betAmount.value.trim();
       updateUIBalance();
       updateBalanceInLocalStorage();
+      minesInput.disabled = true;
+      betAmountInput.disabled = true;
     }
 
     console.log(`balance`, balance);
@@ -91,9 +146,11 @@ document.addEventListener("DOMContentLoaded", function() {
     cashoutbutton.disabled = false;
     
     const difficulty = document.getElementById(`mines`);
-    const generatedArray = generateArray();
+    let generatedArray = generateArray();
     const position = findPositions(generatedArray);
     let profit = parseInt(betAmount.value);
+
+    console.log(`first`, generatedArray);
 
     function revealAllTiles() {
       boxes.forEach(function (box, i) {
@@ -108,8 +165,8 @@ document.addEventListener("DOMContentLoaded", function() {
     
           setTimeout(() => {
             box.classList.remove('greyed-out');
-          }, 1000); // Adjust the class removal delay as needed
-        }, i * 20); // Adjust the delay between tile reveals as needed
+          }, 200); // Adjust the class removal delay as needed
+        }, i * 30); // Adjust the delay between tile reveals as needed
       });
     }
 
@@ -163,7 +220,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     //set multiplier based on difficulty
     if (difficulty.value == 5) {
-      growthBase = 1.05;
+      growthBase = 1.15;
     }
     else if (difficulty.value == 10) {
       growthBase = 1.5;
@@ -197,59 +254,62 @@ document.addEventListener("DOMContentLoaded", function() {
     console.log("Initial multiplier: " + multiplier); // Initial multiplier
 
     cashoutbutton.addEventListener("click", function() {
-  if (nprofit > 0) {
-    cashoutClicked = true;
-    // Assuming you have the initial balance stored in the `balance` variable
-    console.log(`nprofit`, nprofit);
-    console.log(`balance`, balance);
-    balance += nprofit;
-    updateBalanceInLocalStorage();
-  
-    console.log(`cashout balance`, balance);
-    
-    // Update the .totalamount element with the new balance
-    updateUIBalance();
-    revealAllTiles();
-    
-    multCurrentDisplayed.innerHTML = 0;
-    cashoutButtonDisplay.innerHTML = nprofit;
-    
-    console.log(cashoutButtonDisplay);
-    
-    if (cashoutpopup.style.display === "block") {
-      cashoutpopup.style.display = "none"; // Hide the cashoutpopup
-    } else {
-      cashoutpopup.style.display = "block"; // Show the cashoutpopup
-      setTimeout(() => {
-          cashoutpopup.style.display = "none"; // Hide the cashoutpopup after 3 seconds
-      }, 3000); // Change to 3000 milliseconds (3 seconds)
-    }
-  
-    // Reset the nprofit to 0 after cashing out
-    nprofitElement.innerHTML = "0";
-    betbutton.disabled = false;
-    cashoutbutton.disabled = true;
-  }
-  nprofit = 0;
+      if (nprofit > 0) {
+        cashoutClicked = true;
+        // Assuming you have the initial balance stored in the `balance` variable
+        console.log(`nprofit`, nprofit);
+        console.log(`balance`, balance);
+        balance += nprofit;
+        updateBalanceInLocalStorage();
+        
+        console.log(`cashout balance`, balance);
+        
+        // Update the .totalamount element with the new balance
+        updateUIBalance();
+        revealAllTiles();
+        
+        multCurrentDisplayed.innerHTML = 0;
+        cashoutButtonDisplay.innerHTML = nprofit;
+        
+        console.log(cashoutButtonDisplay);
+        
+        if (cashoutpopup.style.display === "block") {
+          cashoutpopup.style.display = "none"; // Hide the cashoutpopup
+        } else {
+          cashoutpopup.style.display = "block"; // Show the cashoutpopup
+          setTimeout(() => {
+            cashoutpopup.style.display = "none"; // Hide the cashoutpopup after 3 seconds
+          }, 3000); // Change to 3000 milliseconds (3 seconds)
+        }
+        
+        // Reset the nprofit to 0 after cashing out
+        nprofitElement.innerHTML = "0";
+        betbutton.disabled = false;
+        cashoutbutton.disabled = true;
+        minesInput.disabled = false;
+        betAmountInput.disabled = false;
+      }
+      nprofit = 0;
+      generatedArray = [];
 });
 
-    //when clicking on box, check array position 
-    boxes.forEach((box, index) => {
-      const clickHandler = () => {
-  
-          if (bombClicked) {
-              return; // Exit the click handler if a bomb has already been clicked
-          }
-  
-          if (cashoutClicked) {
-              return; // Exit the click handler if the cashout has already been clicked
-          }
-  
-          const value = generatedArray[index];
-  
-          console.log(`generated array 1`, generatedArray[index]);
-  
-        if (value === 1) {
+//when clicking on box, check array position 
+boxes.forEach((box, index) => {
+  const clickHandler = () => {
+    
+    if (bombClicked) {
+      return; // Exit the click handler if a bomb has already been clicked
+    }
+    
+    if (cashoutClicked) {
+      return; // Exit the click handler if the cashout has already been clicked
+    }
+    
+    const value = generatedArray[index];
+    
+    console.log(`generated array 1`, generatedArray[index]);
+          
+          if (value === 1) {
           box.classList.add('bomb');
           bombClicked = true;
           boxes.forEach(function(box) {
@@ -260,16 +320,18 @@ document.addEventListener("DOMContentLoaded", function() {
           revealAllTiles();
           betbutton.disabled = false;
           cashoutbutton.disabled = true;
+          minesInput.disabled = false;
+          betAmountInput.disabled = false;
           profit = 0;
           nprofitElement.innerHTML = profit;
           multCurrentDisplayed.innerHTML = 0;
           multNextDisplayed.innerHTML = 0;
-
+          generatedArray = [];
           // make grid not clickable
           boxes.forEach((tile) => {
             tile.removeEventListener('click', clickHandler);
           });
-
+          
         } else if (value === 0) {
           box.classList.add('gold');
           box.removeEventListener('click', clickHandler); // Remove the click event listener
@@ -277,7 +339,7 @@ document.addEventListener("DOMContentLoaded", function() {
           profit = (Math.round(betAmount.value.trim() * multiplier * 100) / 100);
           updateProfit(profit); 
           console.log(`profit`, profit);
-
+          
           if (multiplier < 10) {
             multCurrentDisplayed.innerHTML = (Math.round(multiplier * 100) / 100) + `x`;
             // multNextDisplayed.innerHTML = (Math.round(multiplier * 100) / 100) + `x`;
