@@ -17,50 +17,48 @@ var betAmountInput = document.getElementById("betamount");
 var boxes = document.querySelectorAll('.tile');
 
 // ANIMATIONS SECTION
-
 boxes.forEach((box) => {
-    let isPressed = false;
+  let isPressed = false;
 
-    box.addEventListener('mouseenter', () => {
-        if (!isPressed) {
-            box.style.transition = 'transform 0.1s ease-in-out'; // Add transition on hover
-            box.style.transform = 'rotateX(20deg) rotateY(20deg)'; // Rotate slightly on hover
-        }
-    });
+  box.addEventListener('mouseenter', () => {
+      if (!isPressed) {
+          box.style.transition = 'transform 0.2s ease-in-out'; // Add transition on hover
+          box.style.transform = 'rotateX(20deg) rotateY(20deg)'; // Rotate slightly on hover
+      }
+  });
 
-    function backAndForthAnimation() {
-      box.style.transition = 'transform 0.5s ease-in-out'; // Add transition for back and forth
-      box.style.transform = 'rotateX(0deg) rotateY(0deg)'; // Rotate back slightly
+  box.addEventListener('mouseleave', () => {
+      if (!isPressed) {
+          box.style.transition = 'transform 0.2s ease-in-out'; // Add transition on hover out
+          box.style.transform = 'rotateX(0deg) rotateY(0deg)'; // Reset rotation
+      }
+  });
 
-      timeoutId = setTimeout(() => {
-          resetRotation(); // Reset rotation
-          timeoutId = null;
-      }, 1000); // Adjust the timing for back and forth and stopping
-  }
+  box.addEventListener('mousedown', () => {
+      isPressed = true;
+      box.style.transition = 'transform 0.2s ease-in-out'; // Add transition on press
+      box.style.transform = 'rotateX(40deg) rotateY(40deg)'; // Rotate to the specified angle
 
-    box.addEventListener('mouseleave', () => {
-        if (!isPressed) {
-            box.style.transition = 'transform 0.2s ease-in-out'; // Add transition on hover out
-            box.style.transform = 'rotateX(0deg) rotateY(0deg)'; // Reset rotation
-            backAndForthAnimation();
-        }
-    });
+      // Reset if you move out of the tile while clicking
+      box.addEventListener('mouseleave', () => {
+          if (isPressed) {
+              box.style.transition = 'transform 0.2s ease-in-out'; // Add transition on hover out
+              box.style.transform = 'rotateX(0deg) rotateY(0deg)'; // Reset rotation
+              isPressed = false;
+          }
+      });
+  });
 
-    box.addEventListener('mousedown', () => {
-        isPressed = true;
-        box.style.transition = 'transform 0.2s ease-in-out'; // Add transition on press
-        box.style.transform = 'rotateX(40deg) rotateY(40deg)'; // Rotate to the specified angle
-    });
-
-    box.addEventListener('mouseup', () => {
-        if (isPressed) {
-            // Allow the hover animation to take over when not pressed
-            box.style.transition = 'transform 0.2s ease-in-out'; // Add transition on release
-            box.style.transform = 'rotateX(20deg) rotateY(20deg)'; // Return to hover state
-            isPressed = false;
-        }
-    });
+  document.addEventListener('mouseup', () => {
+      if (isPressed) {
+          // Allow the hover animation to take over when not pressed
+          box.style.transition = 'transform 0.2s ease-in-out'; // Add transition on release
+          box.style.transform = 'rotateX(20deg) rotateY(20deg)'; // Return to hover state
+          isPressed = false;
+      }
+  });
 });
+
 
 
 // CODE SECTION
