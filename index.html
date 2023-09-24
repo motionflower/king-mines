@@ -17,8 +17,6 @@
 </header>
 <div class="container">
     <div class="leftpanel">
-        Total: $
-        <span class="betamount">1</span>
         <form id="betsettings"> 
             <input required id="betamount" type="number" placeholder="Bet amount">
             <br>
@@ -41,13 +39,13 @@
                 Next: <span class="multnext">0</span>
             </div>
         <br>
-            <p class="profit">Profit: <span class="nprofit">0</span></p>
+            <p class="profit">Profit: $<span class="nprofit">0</span></p>
             <button type="submit" id="cashout">CASH OUT!</button>
             <div class="divider vertical"></div>
             <div id="cashoutpopup" class="cashoutpopup">Cashed out: $<span class="cashoutamount">0</span></div>
         </div>
     </div>
-    <div class="game">
+    <div class="game" draggable="false">
         <div class="frame"></div>
         <div class="tile 1 greyed-out" draggable="false"></div>
         <div class="tile 2 greyed-out" draggable="false"></div>
@@ -74,6 +72,33 @@
         <div class="tile 23 greyed-out" draggable="false"></div>
         <div class="tile 24 greyed-out" draggable="false"></div>
         <div class="tile 25 greyed-out" draggable="false"></div>
+    </div>
+    <div class="back">
+        <div class="goldorbomb 1"></div>
+        <div class="goldorbomb 2"></div>
+        <div class="goldorbomb 3"></div>
+        <div class="goldorbomb 4"></div>
+        <div class="goldorbomb 5"></div>
+        <div class="goldorbomb 6"></div>
+        <div class="goldorbomb 7"></div>
+        <div class="goldorbomb 8"></div>
+        <div class="goldorbomb 9"></div>
+        <div class="goldorbomb 10"></div>
+        <div class="goldorbomb 11"></div>
+        <div class="goldorbomb 12"></div>
+        <div class="goldorbomb 13"></div>
+        <div class="goldorbomb 14"></div>
+        <div class="goldorbomb 15"></div>
+        <div class="goldorbomb 16"></div>
+        <div class="goldorbomb 17"></div>
+        <div class="goldorbomb 18"></div>
+        <div class="goldorbomb 19"></div>
+        <div class="goldorbomb 20"></div>
+        <div class="goldorbomb 21"></div>
+        <div class="goldorbomb 22"></div>
+        <div class="goldorbomb 23"></div>
+        <div class="goldorbomb 24"></div>
+        <div class="goldorbomb 25"></div>
     </div>
     <div class="indicator">
         <output name="result" for="completion">50</output>
